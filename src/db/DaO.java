@@ -7,19 +7,41 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DaO {
+public class  DaO{
 
-    Connection conn = null;
+    private static final DaO instanceDaO = new DaO();
+    private Connection conn = null;
     Statement stmt = null;
     String sql;
 
+    private DaO() {
+    }
+        
+    public static DaO getInstance() {
+        return instanceDaO;
+    }
+    
+    private Connection getConnection() throws SQLException {
+        if (conn == null || conn.isClosed()) {
+            String projectPath = System.getProperty("user.dir");
+            String url = "jdbc:sqlite:" + projectPath + "\\src\\agendas.db";
+            conn = DriverManager.getConnection(url);
+        }
+        return conn;
+    }
+    
+    
     public void conectar() {
         try {
             // Paso 1: Registrar el driver JDBC de SQLite
             Class.forName("org.sqlite.JDBC");
 
+            String projectPath = System.getProperty("user.dir");
+            String url = "jdbc:sqlite:" + projectPath + "\\src\\agendas.db";
+            
+            
             // Paso 2: Verificar si la base de datos ya existe
-            String url = "jdbc:sqlite:C:\\Users\\adria\\OneDrive\\Documentos\\NetBeansProjects\\AgendaDeTurnos\\src\\agendas.db";
+            //String url = "jdbc:sqlite:C:\\Users\\adria\\OneDrive\\Documentos\\NetBeansProjects\\AgendaDeTurnos\\src\\agendas.db";
             File file = new File(url.replace("jdbc:sqlite:", ""));
             if (file.exists()) {
                 System.out.println("La base de datos ya existe");
@@ -28,7 +50,6 @@ public class DaO {
             } else {
 
                 // Paso 2.1: Establecer la conexión con la base de datos
-                url = "jdbc:sqlite:C:\\Users\\adria\\OneDrive\\Documentos\\NetBeansProjects\\AgendaDeTurnos\\src\\agendas.db";
                 conn = DriverManager.getConnection(url);
 
                 // Autenticar la conexión exitosa y mostrar la ruta
@@ -37,7 +58,7 @@ public class DaO {
             }
 
             // Paso 3: Crear la tabla de turnos
-            stmt = conn.createStatement();
+            stmt = getConnection().createStatement();
             sql = "CREATE TABLE turnos "
                     + "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "fecha TEXT NOT NULL, "
@@ -57,7 +78,8 @@ public class DaO {
 
     public void guardarTurno(String fecha, String hora, int pacienteContacto, String pacienteNombre) {
         try {
-            stmt = conn.createStatement();
+            
+            stmt = getConnection().createStatement();
             sql = "INSERT INTO turnos (fecha, hora, pacienteContacto, pacienteNombre) "
                     + "VALUES ('" + fecha + "', '" + hora + "', " + pacienteContacto + ", '" + pacienteNombre + "')";
             stmt.executeUpdate(sql);
@@ -71,7 +93,8 @@ public class DaO {
     public void mostrarTurnos() {
         // Paso 6: Mostrar los usuarios
         try {
-            stmt = conn.createStatement();
+
+            stmt = getConnection().createStatement();
             sql = "SELECT * FROM turnos";
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -95,7 +118,7 @@ public class DaO {
                 stmt.close();
             }
             if (conn != null) {
-                conn.close();
+                getConnection().close();
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

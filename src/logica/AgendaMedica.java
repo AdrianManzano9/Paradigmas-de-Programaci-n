@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AgendaMedica {
 
-    DaO Dao = new DaO();
+    DaO Dao = DaO.getInstance();
     private List<Turno> turnos;
 
     public AgendaMedica() {
