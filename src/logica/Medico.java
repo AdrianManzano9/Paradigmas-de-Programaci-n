@@ -36,7 +36,4 @@ public class Medico {
         agenda.cancelarTurno(idTurno);
     }
 
-    public List<Turno> listarTurnos() {
-        return agenda.listarTurnos();
-    }
 }

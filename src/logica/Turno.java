@@ -15,10 +15,10 @@ public class Turno {
     private int idTurno;
     private String fecha;
     private String hora;
-    private int pacienteContacto;
+    private String pacienteContacto;
     private String pacienteNombre;
 
-    public Turno( String fecha, String hora, int pacienteContacto, String pacienteNombre) {
+    public Turno( String fecha, String hora, String pacienteContacto, String pacienteNombre) {
                     
         this.fecha = fecha;
         this.hora = hora;
@@ -52,11 +52,11 @@ public class Turno {
         this.fecha = Fecha;
     }
 
-    public int getPacienteContacto() {
+    public String getPacienteContacto() {
         return pacienteContacto;
     }
 
-    public void setPacienteContacto(int pacienteContacto) {
+    public void setPacienteContacto(String pacienteContacto) {
         this.pacienteContacto = pacienteContacto;
     }
 

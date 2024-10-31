@@ -6,8 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-public class  DaO{
+public class DaO {
 
     private static final DaO instanceDaO = new DaO();
     private Connection conn = null;
@@ -16,11 +17,11 @@ public class  DaO{
 
     private DaO() {
     }
-        
+
     public static DaO getInstance() {
         return instanceDaO;
     }
-    
+
     private Connection getConnection() throws SQLException {
         if (conn == null || conn.isClosed()) {
             String projectPath = System.getProperty("user.dir");
@@ -29,8 +30,7 @@ public class  DaO{
         }
         return conn;
     }
-    
-    
+
     public void conectar() {
         try {
             // Paso 1: Registrar el driver JDBC de SQLite
@@ -38,8 +38,7 @@ public class  DaO{
 
             String projectPath = System.getProperty("user.dir");
             String url = "jdbc:sqlite:" + projectPath + "\\src\\agendas.db";
-            
-            
+
             // Paso 2: Verificar si la base de datos ya existe
             //String url = "jdbc:sqlite:C:\\Users\\adria\\OneDrive\\Documentos\\NetBeansProjects\\AgendaDeTurnos\\src\\agendas.db";
             File file = new File(url.replace("jdbc:sqlite:", ""));
@@ -76,9 +75,9 @@ public class  DaO{
         }
     }
 
-    public void guardarTurno(String fecha, String hora, int pacienteContacto, String pacienteNombre) {
+    public void guardarTurno(String fecha, String hora, String pacienteContacto, String pacienteNombre) {
         try {
-            
+
             stmt = getConnection().createStatement();
             sql = "INSERT INTO turnos (fecha, hora, pacienteContacto, pacienteNombre) "
                     + "VALUES ('" + fecha + "', '" + hora + "', " + pacienteContacto + ", '" + pacienteNombre + "')";
@@ -90,14 +89,14 @@ public class  DaO{
         }
     }
 
-    public void mostrarTurnos() {
+    public String[] mostrarTurnos() {
         // Paso 6: Mostrar los usuarios
+        String[] turnoSting= new String[55];
         try {
-
             stmt = getConnection().createStatement();
             sql = "SELECT * FROM turnos";
             ResultSet rs = stmt.executeQuery(sql);
-
+            int cont = 0;
             // Paso 4: Procesar los resultados de la consulta
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -105,11 +104,14 @@ public class  DaO{
                 String hora = rs.getString("hora");
                 int pacienteContacto = rs.getInt("pacienteContacto");
                 String pacienteNombre = rs.getString("pacienteNombre");
-                System.out.println("ID: " + id + ", fecha: " + fecha + ", hora: " + hora + ", pacienteContacto: " + pacienteContacto + ", pacienteNombre: " + pacienteNombre);
+                turnoSting[cont]="ID: " + id + ", fecha: " + fecha + ", hora: " + hora + ", pacienteContacto: " + pacienteContacto + ", pacienteNombre: " + pacienteNombre;
+                cont++;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        return turnoSting;
     }
 
     public void desconectar() {
