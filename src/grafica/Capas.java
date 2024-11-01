@@ -14,5 +14,6 @@ public class Capas  {
     public static void main(String[] args) {
     Pantalla prin = new Pantalla();
     prin.show();
+    
 }
 }

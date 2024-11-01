@@ -5,17 +5,11 @@
 package logica;
 
 import db.DaO;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AgendaMedica {
 
     DaO Dao = DaO.getInstance();
-    private List<Turno> turnos;
 
-    public AgendaMedica() {
-        this.turnos = new ArrayList<>();
-    }
 
     public void agregarTurno(Turno turno) {
         Dao.conectar(); // aca quieren conectar la base 
@@ -23,10 +17,10 @@ public class AgendaMedica {
         Dao.desconectar();
     }
 
-    public void cancelarTurno(int idTurno) {
+    public void cancelarTurno(String idTurno) {
 
         Dao.conectar(); // aca quieren conectar la base 
-        turnos.removeIf(turno -> turno.getIdTurno() == idTurno);
+        Dao.cancelarTurno(idTurno);
         Dao.desconectar();
     }
 

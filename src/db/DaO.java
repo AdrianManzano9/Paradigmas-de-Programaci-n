@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class DaO {
 
@@ -88,6 +87,18 @@ public class DaO {
             System.out.println(e.getMessage());
         }
     }
+    public void cancelarTurno(String id) {
+        try {
+
+            stmt = getConnection().createStatement();
+            sql = "DELETE FROM turnos WHERE id="+id;
+            stmt.executeUpdate(sql);
+
+            System.out.println("Turno cancelado correctamente");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     public String[] mostrarTurnos() {
         // Paso 6: Mostrar los usuarios
@@ -104,7 +115,7 @@ public class DaO {
                 String hora = rs.getString("hora");
                 int pacienteContacto = rs.getInt("pacienteContacto");
                 String pacienteNombre = rs.getString("pacienteNombre");
-                turnoSting[cont]="ID: " + id + ", fecha: " + fecha + ", hora: " + hora + ", pacienteContacto: " + pacienteContacto + ", pacienteNombre: " + pacienteNombre;
+                turnoSting[cont]="ID: " + id + ", Fecha: " + fecha + ", Hora: " + hora + ", Contacto del paciente: " + pacienteContacto + ", Nombre del paciente: " + pacienteNombre;
                 cont++;
             }
         } catch (SQLException e) {
@@ -113,6 +124,8 @@ public class DaO {
 
         return turnoSting;
     }
+    
+    
 
     public void desconectar() {
         try {
