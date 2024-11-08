@@ -5,37 +5,31 @@
 package logica;
 
 import db.DaO;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AgendaMedica {
 
     DaO Dao = DaO.getInstance();
-    private List<Turno> turnos;
 
-    public AgendaMedica() {
-        this.turnos = new ArrayList<>();
-    }
 
     public void agregarTurno(Turno turno) {
+        Dao.conectar(); // aca quieren conectar la base 
         Dao.guardarTurno(turno.getFecha(), turno.getHora(), turno.getPacienteContacto(), turno.getPacienteNombre());
+        Dao.desconectar();
     }
 
-    public void cancelarTurno(int idTurno) {
-        turnos.removeIf(turno -> turno.getIdTurno() == idTurno);
+    public void cancelarTurno(String idTurno) {
+
+        Dao.conectar(); // aca quieren conectar la base 
+        Dao.cancelarTurno(idTurno);
+        Dao.desconectar();
     }
 
-    public List<Turno> listarTurnos() {
-        return turnos;
+    public String[] listarTurnos() {
+        Dao.conectar(); // aca quieren conectar la base 
+        String[] turnoSting = Dao.mostrarTurnos();
+        Dao.desconectar();
+        return turnoSting;
     }
 
-    public List<Turno> buscarTurnosPorFecha(String fecha) {
-        List<Turno> turnosPorFecha = new ArrayList<>();
-        for (Turno turno : turnos) {
-            if (turno.getFecha().equals(fecha)) {
-                turnosPorFecha.add(turno);
-            }
-        }
-        return turnosPorFecha;
-    }
+    
 }
