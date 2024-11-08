@@ -28,15 +28,4 @@ public class Medico {
         return agenda;
     }
 
-    public void agendarTurno(Turno turno) {
-        agenda.agregarTurno(turno);
-    }
-
-    public void cancelarTurno(int idTurno) {
-        agenda.cancelarTurno(idTurno);
-    }
-
-    public List<Turno> listarTurnos() {
-        return agenda.listarTurnos();
-    }
 }
