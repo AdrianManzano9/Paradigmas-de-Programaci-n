@@ -41,6 +41,7 @@ public class Pantalla extends javax.swing.JFrame {
         id = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -69,6 +70,11 @@ public class Pantalla extends javax.swing.JFrame {
         nombre.setText("Nombre");
 
         contacto.setText("Contacto");
+        contacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactoActionPerformed(evt);
+            }
+        });
 
         botonEliminar.setText("Cancelar");
         botonEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -85,6 +91,8 @@ public class Pantalla extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
+        jLabel2.setText("jLabel2");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -99,7 +107,9 @@ public class Pantalla extends javax.swing.JFrame {
                                 .addGap(40, 40, 40))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(42, 42, 42)
-                                .addComponent(hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -118,7 +128,9 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonEnviar)
                     .addComponent(hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,7 +178,7 @@ public class Pantalla extends javax.swing.JFrame {
     private void botonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEnviarActionPerformed
     medico.getAgenda().agregarTurno(new Turno( fecha.getText(), hora.getText(), contacto.getText(), nombre.getText()));
     strings =  medico.getAgenda().listarTurnos();
-jList1.setVisible(false); jList1.setVisible(true);
+    jList1.setVisible(false); jList1.setVisible(true);
     }//GEN-LAST:event_botonEnviarActionPerformed
 
     private void horaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaActionPerformed
@@ -183,6 +195,10 @@ jList1.setVisible(false); jList1.setVisible(true);
 jList1.setVisible(false); jList1.setVisible(true);
     }//GEN-LAST:event_botonEliminarActionPerformed
 
+    private void contactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -196,6 +212,7 @@ jList1.setVisible(false); jList1.setVisible(true);
     private javax.swing.JTextField hora;
     private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
