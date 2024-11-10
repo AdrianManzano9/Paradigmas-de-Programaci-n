@@ -1,35 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logica;
 
-import db.DaO;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AgendaMedica {
+    private List<Turno> turnos;
 
-    DaO Dao = DaO.getInstance();
-
+    public AgendaMedica() {
+        this.turnos = new ArrayList<>();
+    }
 
     public void agregarTurno(Turno turno) {
-        Dao.conectar(); // aca quieren conectar la base 
-        Dao.guardarTurno(turno.getFecha(), turno.getHora(), turno.getPacienteContacto(), turno.getPacienteNombre());
-        Dao.desconectar();
+        turnos.add(turno);
     }
 
-    public void cancelarTurno(String idTurno) {
-
-        Dao.conectar(); // aca quieren conectar la base 
-        Dao.cancelarTurno(idTurno);
-        Dao.desconectar();
+    public void cancelarTurno(int idTurno) {
+        turnos.removeIf(turno -> turno.getIdTurno() == idTurno);
     }
 
-    public String[] listarTurnos() {
-        Dao.conectar(); // aca quieren conectar la base 
-        String[] turnoSting = Dao.mostrarTurnos();
-        Dao.desconectar();
-        return turnoSting;
+    public List<Turno> listarTurnos() {
+        return new ArrayList<>(turnos);
     }
 
-    
+    // Método para obtener turnos ordenados por fechaHora
+    public List<Turno> listarTurnosOrdenadosPorFecha() {
+        return turnos.stream()
+                .sorted(Comparator.comparing(Turno::getFechaHora))
+                .collect(Collectors.toList());
+    }
 }

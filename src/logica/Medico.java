@@ -1,15 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logica;
 
-import java.util.List;
 
-/**
- *
- * @author adria
- */
 public class Medico {
 
     private int idMedico;
@@ -22,10 +13,29 @@ public class Medico {
         this.nombre = nombre;
         this.especialidad = especialidad;
         this.agenda = new AgendaMedica();
-    }
+        }
 
     public AgendaMedica getAgenda() {
         return agenda;
+        }
+    
+    public int getIdMedico(){
+        return idMedico;
+        }
+    
+    public String getNombre(){
+        return nombre;
+        }
+    
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+        }
+   
+    public String getEspecialidad(){
+        return especialidad;
+        }
+    
+    public void setEspecialidad(String especialidad){
+        this.especialidad = especialidad;
+        }
     }
-
-}
